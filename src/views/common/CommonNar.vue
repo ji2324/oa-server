@@ -9,6 +9,7 @@
     text-color="#fff"
     background-color="#545c64"
   >
+    <h3 v-if="!isCollapse">协同办公系统</h3>
     <el-menu-item
       v-for="item in noChildrenMenu"
       :key="item.path"
@@ -31,6 +32,7 @@
         v-for="child in item.children"
         :key="child.path"
         :index="child.i"
+        style="cursor: pointer"
         @click.native="choice(child)"
       >
         <span slot="title">{{ child.label }}{{ child.index }}</span>
@@ -40,10 +42,10 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      isCollapse: false,
       menus: [
         {
           path: "/",
@@ -118,6 +120,9 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      isCollapse: (state) => state.isCollapse,
+    }),
     noChildrenMenu() {
       let result = this.menus.filter((m) => !m.children);
       return result;
@@ -134,7 +139,9 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
+    ...mapMutations(["addheaderList"]),
     choice(item) {
+      this.addheaderList(item);
       this.$router.replace({
         path: item.path,
       });
@@ -150,5 +157,10 @@ export default {
 }
 .el-menu {
   height: 100%;
+  h3 {
+    color: white;
+    height: 48px;
+    text-align: center;
+  }
 }
 </style>

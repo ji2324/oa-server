@@ -1,12 +1,11 @@
 //配置路由相关信息
-import { Main } from 'element-ui'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 //安装插件
 Vue.use(VueRouter)
 
-const MainPage = () => import('views/Main.vue');
+const Main = () => import('views/Main.vue');
 const Home = () => import('views/home/Home.vue');
 const User = () => import('views/user/User.vue');
 const Manage = () => import('views/manage/Manage.vue');
@@ -24,7 +23,7 @@ const routes = [
     },
     {
         path: "/main",
-        component: MainPage,
+        component: Main,
         redirect: "/home",
         children: [
             {
